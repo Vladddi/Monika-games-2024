@@ -10,7 +10,7 @@ She likes a lot of cats as well as Disney characters, so I decided to make her t
 The game is a Side-Scrolling Game written in JavaScript, CSS and HTML.
 Special thanks to SoftUni who helped me gain my JavaScript, CSS and HTML knowledge!
 
-In the game "Monika's Ice Game", snowmen approach Monica/the main character.
+In the game "Monika's Ice Game", snowmen approach Monika/the main character.
 They move from right to left on the screen.
 
 The goal is to avoid the snowmen with the main character,
