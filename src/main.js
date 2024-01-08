@@ -46,11 +46,16 @@ function onGameStart() {
 function gameAction() {
     const monika = document.querySelector('.monika');
 
+    // Apply gravitation
+    let isInAir = (player.y + player.height) <= gameArea.offsetHeight
+    if (isInAir) {
+        player.y += game.speed;
+    }
     // Register user input
     if (keys.ArrowUp && player.y > 0) {
         player.y -= game.speed * game.movingMultiplier;
     }
-    if (keys.ArrowDown && player.y + player.height < gameArea.offsetHeight) {
+    if (keys.ArrowDown && isInAir) {
         player.y += game.speed * game.movingMultiplier;
     }
     if (keys.ArrowLeft && player.x > 0) {
