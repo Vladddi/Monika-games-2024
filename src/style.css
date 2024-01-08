@@ -31,3 +31,16 @@ body {
     color: gold;
     text-align: center;
 }
+
+.hide {
+    display: none;
+}
+
+.monika {
+    z-index: 100;
+    position: absolute;
+    width: 120px;
+    height: 102px;
+    background-image: url(./images/monika.png);
+    background-size: cover;
+}
