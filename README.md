@@ -4,7 +4,7 @@ Side-Scrolling Games written in JavaScript, CSS and HTML
 -------------------------------------------------
 ENG
 
-Here you can find games I wrote for my five year old daughter Monica.
+Here you can find games I wrote for my five year old daughter Monika.
 She likes a lot of cats as well as Disney characters, so I decided to make her the main character in her game.
 
 The game is a Side-Scrolling Game written in JavaScript, CSS and HTML.
