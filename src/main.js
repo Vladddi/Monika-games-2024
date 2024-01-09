@@ -3,6 +3,7 @@ const gameStart = document.querySelector('.game-start');
 const gameArea = document.querySelector('.game-area');
 const gameOver = document.querySelector('.game-over');
 const gameScore = document.querySelector('.game-score');
+const gamePoints = document.querySelector('.points');
 
 // Game start listener
 gameStart.addEventListener('click', onGameStart);
@@ -22,6 +23,9 @@ let player = {
 let game = {
     speed: 2,
     movingMultiplier: 4
+};
+let scene = {
+    score: 0
 };
 
 // Game start function
@@ -51,6 +55,9 @@ function gameAction() {
     if (isInAir) {
         player.y += game.speed;
     }
+    //Increment score count
+    scene.score++;
+
     // Register user input
     if (keys.ArrowUp && player.y > 0) {
         player.y -= game.speed * game.movingMultiplier;
@@ -68,6 +75,9 @@ function gameAction() {
     // Apply movement
     monika.style.top = player.y + 'px';
     monika.style.left = player.x + 'px';
+
+    // Apply score
+    gamePoints.textContent = scene.score;
 
     window.requestAnimationFrame(gameAction);
 }
