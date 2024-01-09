@@ -18,11 +18,14 @@ let player = {
     x: 150,
     y: 100,
     width: 0,
-    height: 0
+    height: 0,
+    lastTimeFiredSnowflake: 0
 };
 let game = {
     speed: 2,
-    movingMultiplier: 4
+    movingMultiplier: 4,
+    snowFlakeMultiplier: 5,
+    fireInterval: 1000
 };
 let scene = {
     score: 0
@@ -47,7 +50,7 @@ function onGameStart() {
 }
 
 // Game loop function
-function gameAction() {
+function gameAction(timestamp) {
     const monika = document.querySelector('.monika');
 
     // Apply gravitation
@@ -57,6 +60,17 @@ function gameAction() {
     }
     //Increment score count
     scene.score++;
+
+    // Modify snowflake positions
+    let snowFlakes = document.querySelectorAll('.snowflake');
+    snowFlakes.forEach(snowFlake => {
+        snowFlake.x += game.speed * game.snowFlakeMultiplier;
+        snowFlake.style.left = snowFlake.x + 'px';
+
+        if (snowFlake.x + snowFlake.offsetWidth > gameArea.offsetWidth) {
+            snowFlake.parentElement.removeChild(snowFlake);
+        }
+    });
 
     // Register user input
     if (keys.ArrowUp && player.y > 0) {
@@ -72,9 +86,10 @@ function gameAction() {
         player.x += game.speed * game.movingMultiplier;
     }
 
-    if (keys.Space) {
+    if (keys.Space && timestamp - player.lastTimeFiredSnowflake > game.fireInterval) {
         monika.classList.add('monika-fire');
         snowFlake(player);
+        player.lastTimeFiredSnowflake = timestamp;
     } else {
         monika.classList.remove('monika-fire');
     }
