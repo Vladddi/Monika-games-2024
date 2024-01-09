@@ -72,6 +72,13 @@ function gameAction() {
         player.x += game.speed * game.movingMultiplier;
     }
 
+    if (keys.Space) {
+        monika.classList.add('monika-fire');
+        snowFlake(player);
+    } else {
+        monika.classList.remove('monika-fire');
+    }
+
     // Apply movement
     monika.style.top = player.y + 'px';
     monika.style.left = player.x + 'px';
@@ -90,4 +97,16 @@ function onKeyDown(e) {
 function onKeyUp(e) {
     keys[e.code] = false;
     // console.log(keys);
+}
+
+function snowFlake() {
+    let snowFlake = document.createElement('div');
+
+    snowFlake.classList.add('snowflake');
+    snowFlake.style.top = (player.y + player.height / 3 - 5) + 'px';
+    snowFlake.x = player.x + player.width;
+    snowFlake.style.left = snowFlake.x + 'px';
+    gameArea.appendChild(snowFlake);
+
+    gameArea.appendChild(snowFlake);
 }

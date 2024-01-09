@@ -44,3 +44,18 @@ body {
     background-image: url(./images/monika.png);
     background-size: cover;
 }
+
+.monika-fire {
+    width: 130px;
+    height: 107px;
+    background-image: url(./images/monika-fire.png);
+    background-size: cover;
+}
+
+.snowflake {
+    position: absolute;
+    width: 40px;
+    height: 36px;
+    background-image: url(./images/snowflake.png);
+    background-size: cover;
+}
