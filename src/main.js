@@ -26,11 +26,13 @@ let game = {
     movingMultiplier: 4,
     snowFlakeMultiplier: 5,
     fireInterval: 1000,
-    mountainSpawnInterval: 3000
+    mountainSpawnInterval: 3000,
+    snowmanSpawnInterval: 1000
 };
 let scene = {
     score: 0,
-    lastMountainSpawn: 0
+    lastMountainSpawn: 0,
+    lastSnowmenSpawn: 0
 };
 
 // Game start function
@@ -63,6 +65,17 @@ function gameAction(timestamp) {
     //Increment score count
     scene.score++;
 
+    // Add snowmen
+    if (timestamp - scene.lastSnowmenSpawn > game.snowmanSpawnInterval + 5000 * Math.random()) {
+        let snowman = document.createElement('div');
+        snowman.classList.add('snowman');
+        snowman.x = gameArea.offsetWidth - 60;
+        snowman.style.left = snowman.x + 'px';
+        snowman.style.top = (gameArea.offsetHeight - 60) * Math.random() + 'px';
+        gameArea.appendChild(snowman);
+        scene.lastSnowmenSpawn = timestamp;
+    }
+
     // Add mountains
     if (timestamp - scene.lastMountainSpawn > game.mountainSpawnInterval + 20000 * Math.random()) {
         let mountain = document.createElement('div');
@@ -73,7 +86,15 @@ function gameAction(timestamp) {
         gameArea.appendChild(mountain);
         scene.lastMountainSpawn = timestamp;
     }
-
+    // Modify snowman positions
+    let snowmen = document.querySelectorAll('.snowman');
+    snowmen.forEach(snowman => {
+        snowman.x -= game.speed * 3;
+        snowman.style.left = snowman.x + 'px';
+        if (snowman.x + snowmen.offsetWidth <= 0) {
+            snowman.parentElement.removeChild(snowman);
+        }
+    });
     // Modify mountain positions
     let mountains = document.querySelectorAll('.mountain');
     mountains.forEach(mountain => {
