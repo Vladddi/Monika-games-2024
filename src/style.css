@@ -39,8 +39,8 @@ body {
 .monika {
     z-index: 100;
     position: absolute;
-    width: 120px;
-    height: 102px;
+    width: 130px;
+    height: 106px;
     background-image: url(./images/monika.png);
     background-size: cover;
 }
