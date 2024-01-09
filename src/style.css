@@ -59,3 +59,12 @@ body {
     background-image: url(./images/snowflake.png);
     background-size: cover;
 }
+
+.mountain {
+    z-index: 0;
+    position: absolute;
+    width: 200px;
+    height: 56px;
+    background-image: url(./images/mountain.png);
+    background-size: cover;
+}

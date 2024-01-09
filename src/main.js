@@ -25,10 +25,12 @@ let game = {
     speed: 2,
     movingMultiplier: 4,
     snowFlakeMultiplier: 5,
-    fireInterval: 1000
+    fireInterval: 1000,
+    mountainSpawnInterval: 3000
 };
 let scene = {
-    score: 0
+    score: 0,
+    lastMountainSpawn: 0
 };
 
 // Game start function
@@ -60,6 +62,28 @@ function gameAction(timestamp) {
     }
     //Increment score count
     scene.score++;
+
+    // Add mountains
+    if (timestamp - scene.lastMountainSpawn > game.mountainSpawnInterval + 20000 * Math.random()) {
+        let mountain = document.createElement('div');
+        mountain.classList.add('mountain');
+        mountain.x = gameArea.offsetWidth - 200;
+        mountain.style.left = mountain.x + 'px';
+        mountain.style.top = (gameArea.offsetHeight - 56) * Math.random() + 'px';
+        gameArea.appendChild(mountain);
+        scene.lastMountainSpawn = timestamp;
+    }
+
+    // Modify mountain positions
+    let mountains = document.querySelectorAll('.mountain');
+    mountains.forEach(mountain => {
+        mountain.x -= game.speed;
+        mountain.style.left = mountain.x + 'px';
+
+        if (mountain.x + mountain.offsetWidth <= 0) {
+            mountain.parentElement.removeChild(mountain);
+        }
+    });
 
     // Modify snowflake positions
     let snowFlakes = document.querySelectorAll('.snowflake');
