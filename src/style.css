@@ -75,4 +75,13 @@ body {
     background-image: url(./images/snowman.png);
     background-size: cover;
 }
-
+.game-over {
+    position: absolute;
+    width: 50%;
+    background-color: rgb(230, 124, 230);
+    top: 100px;
+    left: 25%;
+    z-index: 1;
+    text-align: center;
+    padding: 30px;
+}

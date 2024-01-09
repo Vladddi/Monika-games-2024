@@ -27,12 +27,14 @@ let game = {
     snowFlakeMultiplier: 5,
     fireInterval: 1000,
     mountainSpawnInterval: 3000,
-    snowmanSpawnInterval: 1000
+    snowmanSpawnInterval: 1000,
+    snowmanKillBonus: 2000
 };
 let scene = {
     score: 0,
     lastMountainSpawn: 0,
-    lastSnowmenSpawn: 0
+    lastSnowmenSpawn: 0,
+    isActiveGame: true
 };
 
 // Game start function
@@ -135,6 +137,8 @@ function gameAction(timestamp) {
         monika.classList.add('monika-fire');
         snowFlake(player);
         player.lastTimeFiredSnowflake = timestamp;
+
+        isCollision(monika, monika);
     } else {
         monika.classList.remove('monika-fire');
     }
@@ -146,7 +150,24 @@ function gameAction(timestamp) {
     // Apply score
     gamePoints.textContent = scene.score;
 
-    window.requestAnimationFrame(gameAction);
+    if (scene.isActiveGame) {
+        window.requestAnimationFrame(gameAction);
+    }
+
+    // Collision detection
+    snowmen.forEach(snowman => {
+        if (isCollision(monika, snowman)) {
+            gameOverAction();
+        }
+
+        snowFlakes.forEach(snowFlake => {
+            if (isCollision(snowFlake, snowman)) {
+                scene.score += game.snowmanKillBonus;
+                snowman.parentElement.removeChild(snowman);
+                snowFlake.parentElement.removeChild(snowFlake);
+            }
+        })
+    });
 }
 
 // Key handlers
@@ -157,6 +178,21 @@ function onKeyDown(e) {
 function onKeyUp(e) {
     keys[e.code] = false;
     // console.log(keys);
+}
+
+function gameOverAction() {
+    scene.isActiveGame = false;
+    gameOver.classList.remove('hide');
+}
+
+function isCollision(firstElement, secondElement) {
+    let firstRect = firstElement.getBoundingClientRect();
+    let secondRect = secondElement.getBoundingClientRect();
+
+    return !(firstRect.top > secondRect.bottom ||
+        firstRect.bottom < secondRect.top ||
+        firstRect.right < secondRect.left ||
+        firstRect.left > secondRect.right);
 }
 
 function snowFlake() {
