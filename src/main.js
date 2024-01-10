@@ -28,12 +28,15 @@ let game = {
     fireInterval: 1000,
     mountainSpawnInterval: 3000,
     snowmanSpawnInterval: 1000,
-    snowmanKillBonus: 2000
+    snowmanKillBonus: 2000,
+    bonusSnowmanSpawnInterval: 15000,
+    bonusSnowmamKillBonus: 10000
 };
 let scene = {
     score: 0,
     lastMountainSpawn: 0,
     lastSnowmenSpawn: 0,
+    lastBonusSnowmanSpawn: 0,
     isActiveGame: true
 };
 
@@ -67,6 +70,17 @@ function gameAction(timestamp) {
     //Increment score count
     scene.score++;
 
+    // Add bonus-snowman
+    if (timestamp - scene.lastBonusSnowmanSpawn > game.bonusSnowmanSpawnInterval + 5000 * Math.random()) {
+        let bonusSnowman = document.createElement('div');
+        bonusSnowman.classList.add('bonusSnowman');
+        bonusSnowman.x = gameArea.offsetWidth - 60;
+        bonusSnowman.style.left = bonusSnowman.x + 'px';
+        bonusSnowman.style.top = (gameArea.offsetHeight - 60) * Math.random() + 'px';
+        gameArea.appendChild(bonusSnowman);
+        scene.lastBonusSnowmanSpawn = timestamp;
+    }
+
     // Add snowmen
     if (timestamp - scene.lastSnowmenSpawn > game.snowmanSpawnInterval + 5000 * Math.random()) {
         let snowman = document.createElement('div');
@@ -88,6 +102,17 @@ function gameAction(timestamp) {
         gameArea.appendChild(mountain);
         scene.lastMountainSpawn = timestamp;
     }
+
+///     // Modify bonusSnowman positions
+     let bonusSnowmen = document.querySelectorAll('.bonusSnowman');
+     bonusSnowmen.forEach(bonusSnowman => {
+        bonusSnowman.x -= game.speed * 3;
+        bonusSnowman.style.left = bonusSnowman.x + 'px';
+         if (bonusSnowman.x + bonusSnowman.offsetWidth <= 0) {
+            bonusSnowman.parentElement.removeChild(bonusSnowman);
+         }
+     });
+
     // Modify snowman positions
     let snowmen = document.querySelectorAll('.snowman');
     snowmen.forEach(snowman => {
@@ -167,6 +192,14 @@ function gameAction(timestamp) {
                 snowFlake.parentElement.removeChild(snowFlake);
             }
         })
+
+        bonusSnowmen.forEach(bonusSnowman => {
+            if (isCollision(monika, bonusSnowman)) {
+                scene.score += game.bonusSnowmamKillBonus;
+                bonusSnowman.parentElement.removeChild(bonusSnowman);
+            }
+        })
+
     });
 }
 

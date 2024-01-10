@@ -85,3 +85,10 @@ body {
     text-align: center;
     padding: 30px;
 }
+.bonusSnowman {
+    position: absolute;
+    width: 80px;
+    height: 107px;
+    background-image: url(./images/bonus-snowman.png);
+    background-size: cover;
+}
