@@ -30,7 +30,7 @@ let game = {
     snowmanSpawnInterval: 1000,
     snowmanKillBonus: 2000,
     bonusSnowmanSpawnInterval: 15000,
-    bonusSnowmamKillBonus: 10000
+    bonusSnowmamKillBonus: 15000
 };
 let scene = {
     score: 0,
@@ -115,8 +115,10 @@ function gameAction(timestamp) {
 
     // Modify snowman positions
     let snowmen = document.querySelectorAll('.snowman');
+    snowmanSpeed = game.speed * 1;
     snowmen.forEach(snowman => {
-        snowman.x -= game.speed * 3;
+        snowmanSpeed += 0.1;
+        snowman.x -= snowmanSpeed;
         snowman.style.left = snowman.x + 'px';
         if (snowman.x + snowmen.offsetWidth <= 0) {
             snowman.parentElement.removeChild(snowman);
